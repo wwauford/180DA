@@ -8,15 +8,19 @@ while(True):
     ret, frame = cap.read()
 
     # Our operations on the frame come here
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     
     
     # Display the resulting frame
     #x=np.size(gray[:,0])
     #y=np.size(gray[0,:])
     #flip=255*np.ones(x,y)-gray
-    x,y=gray.shape
-    inv=np.ones((x,y),dtype=np.uint8)*255-gray
+    x,y,z=frame.shape
+    full=np.ones((x,y),dtype=np.uint8)*255
+    inv=np.zeros((x,y,3),dtype=np.uint8)
+    #inv=np.ones((x,y),dtype=np.uint8)*255-gray
+    inv[:,:,0]=full-frame[:,:,0]
+    inv[:,:,1]=full-frame[:,:,1]
+    inv[:,:,2]=full-frame[:,:,2]
     cv2.imshow('frame',inv)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
